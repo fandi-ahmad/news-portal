@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\NewsCollection;
 use App\Models\News;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -13,7 +14,9 @@ class NewsController extends Controller
      */
     public function index()
     {
-        $news = News::all();    // mengambil semua data di tabel news
+        // $news = News::all();    // mengambil semua data di tabel news
+        $news = new NewsCollection(News::paginate(10));      // untuk pagination
+        // dd($news);              // untuk lihat preview data yang tampil di UI
         return Inertia::render('Homepage', [
             'title' => 'PORTAL BERITA HOME',
             'description' => 'selamat datang di web Portal Berita',
